@@ -28,7 +28,7 @@ Here is the graph of loss:
 state = torch.load(checkpoints + 'checkpoint-6.pkl')
 plt.plot(smooth(state['losses'], 50))
 ```
-.....image
+< img src="./img/resnet18.png"/>
 
 Our result after checkpoint 6 is:
   - test accuracy score on Kaggle: 0.64
@@ -51,7 +51,7 @@ Our result after checkpoint 12 is:
   - test accuracy score on Kaggle: 0.669
   - train accuracy: 
 
-## ResNet50
+## ResNet50 (Resolution=256)
 Our third model is to switch ResNet34 to ResNet50. We trained with ResNet50 for 30 epochs. Since it was not able to fit on our GPU, we decrease the batch size from 128 to 48. We also changed the learning rate from 0.01 initially, 0.001 partway, 0.0001 finally.
 
 Since increasing the size of the test image inputs could improve the accuracy, we changed the transforms to use Resize(256) and RandomCrop(256, padding=8, padding_mode='edge') instead of Resize(128) and RandomCrop(128, padding=8, padding_mode='edge'). We also changed the test transforms to use Resize(256) instead of Resize(128).
@@ -66,6 +66,10 @@ losses = train(resnet, data['train'], epochs=30, schedule={0:.01, 5:.001, 10:.00
 Our result after checkpoint 30 is: 
   - test accuracy score on Kaggle: 0.816
   - train accuracy:
+
+
+## ResNet50 (Resolution=512)
+Our fourth model is to still use ResNet50, but we change the resolution from 256 to 512. We trained with ResNet50 for 13 epochs since our memory space is not big enough to run more epochs. However, we also decreased the batch size from 48 to 24.
 
 ## Discussion
 Problem:
