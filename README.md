@@ -3,6 +3,7 @@ Contributor: Amber Xu,
              Jennifer Tao,
              Kenny Wu,
              Zuer Wang
+ 
 [Video](https://washington.zoom.us/rec/share/pN7yxpXHHOu9ksLJie-GHSfrwJGL8dtzJffQagW5bnnOw-PLNv-AtDw6oUhnBv2K.EHd_Ev9Aw1O9Fd-N?startTime=1622870841000)         
              
 ## Overview
