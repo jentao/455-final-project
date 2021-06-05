@@ -28,7 +28,7 @@ Here is the graph of loss:
 state = torch.load(checkpoints + 'checkpoint-6.pkl')
 plt.plot(smooth(state['losses'], 50))
 ```
-< img src="./img/resnet18.png"/>
+<img src="./img/resnet18.png"/>
 
 Our result after checkpoint 6 is:
   - test accuracy score on Kaggle: 0.64
