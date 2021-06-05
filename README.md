@@ -69,7 +69,9 @@ Our result after checkpoint 30 is:
 
 ## Discussion
 Problem:
+
 Initially, we did not use GPU to run our model, so it took us a few days to finish running ResNet18 and ResNet34. When we changed to use GPU, the project went faster, but the memory space was too small to train with ResNet50. There are lots of warnings about full memory when we load the birds data and train with the ResNet. It might be better to run locally.
 
 Improvements: 
+
 From the data of kaggle leaderboard, the best accuracy is 0.937, which is pretty high. We all would like to learn about the approach they used. We would try to improve our models to get better if we have more time to work on it.
