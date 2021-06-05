@@ -13,6 +13,7 @@ The goal of this problem was to reach ~80% accuracy or higher. To improve the ac
 ## Problem setup & Data used
 For this competition, the data that we used to train the models is provided by the instructor, Joseph Redmon.
 A [starter code](https://colab.research.google.com/drive/1kHo8VT-onDxbtS3FM77VImG35h_K_Lav#scrollTo=yRzPDiVzsyGz) also provided by our instructor, including loading the data, training, making predictions, visualizing loss images.
+We used GPU to run all our models.
 
 ## ResNet18
 
@@ -45,11 +46,10 @@ losses = train(resnet, data['train'], epochs=15, schedule={0:0.01, 4:0.001}, lr=
 
 After finishing checkpoint12, we found that the loss did not change much and it floats in the range of (0.5, 0.7). It is impossible for the loss to continue decreasing. Thus, we stopped running the extra epochs.
 
-.....image
+<img src="./img/resnet34.png"/>
 
 Our result after checkpoint 12 is: 
   - test accuracy score on Kaggle: 0.669
-  - train accuracy: 
 
 ## ResNet50 (Resolution=256)
 Our third model is to switch ResNet34 to ResNet50. We trained with ResNet50 for 30 epochs. Since it was not able to fit on our GPU, we decrease the batch size from 128 to 48. We also changed the learning rate from 0.01 initially, 0.001 partway, 0.0001 finally.
@@ -61,15 +61,24 @@ resnet.fc = nn.Linear(2048, 555)
 losses = train(resnet, data['train'], epochs=30, schedule={0:.01, 5:.001, 10:.0001}, lr=.01, checkpoint_path=checkpoints_resnet50)
 ```
 
-.....image
+<img src="./img/resnet50reso256.png"/>
 
 Our result after checkpoint 30 is: 
   - test accuracy score on Kaggle: 0.816
-  - train accuracy:
 
 
 ## ResNet50 (Resolution=512)
 Our fourth model is to still use ResNet50, but we change the resolution from 256 to 512. We trained with ResNet50 for 13 epochs since our memory space is not big enough to run more epochs. However, we also decreased the batch size from 48 to 24.
+```
+resnet = torch.hub.load('pytorch/vision:v0.6.0', 'resnet50', pretrained=True)
+resnet.fc = nn.Linear(2048, 555)
+losses = train(resnet, data['train'], epochs=15, schedule={0:.01, 5:.001, 10:.0001}, lr=.01, checkpoint_path=checkpoints_resnet50)
+```
+
+<img src="./img/resnet50reso512.png"/>
+
+Our result after checkpoint 13 is: 
+  - test accuracy score on Kaggle: 0.851
 
 ## Discussion
 Problem:
