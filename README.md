@@ -15,7 +15,7 @@ For this competition, the data that we used to train the models is provided by t
 A [starter code](https://colab.research.google.com/drive/1kHo8VT-onDxbtS3FM77VImG35h_K_Lav#scrollTo=yRzPDiVzsyGz) also provided by our instructor, including loading the data, training, making predictions, visualizing loss images.
 We used GPU to run all our models.
 
-## ResNet18
+## ResNet18 (Resolution=128)
 
 We load a ResNet-18 model pre-trained on the image, train the model for five epochs on the training data, and generate predictions for the test images. We first tried to train with ResNet18 for 6 epochs. We decreased the learning rate from 0.01 to 0.001 when the epoch is 4.
 ```
@@ -35,8 +35,8 @@ Our result after checkpoint 6 is:
   - test accuracy score on Kaggle: 0.64
   - train accuracy: 0.796458
 
-## ResNet34
-Our second model is to switch ResNet18 to ResNet34. We trained with ResNet34 for 12 epochs. Although we wrote 15 epochs, we did not finish running all of them since the accuracy was obviously pretty low. We run this model without changing any other parmaeters. We decreased the learning rate from 0.01 to 0.001 midway through as above.
+## ResNet34 (Resolution=128)
+Our second model is ResNet34. We trained for 12 epochs. Although we wrote 15 epochs, we did not finish running all of them since the accuracy did not change too much, and it was not high enough. We run this model without changing any other parmaeters. We decreased the learning rate from 0.01 to 0.001 midway through as above.
 ```
 resnet = torch.hub.load('pytorch/vision:v0.6.0', 'resnet34', pretrained=True)
 resnet.fc = nn.Linear(512, 555)
@@ -52,9 +52,7 @@ Our result after checkpoint 12 is:
   - test accuracy score on Kaggle: 0.669
 
 ## ResNet50 (Resolution=256)
-Our third model is to switch ResNet34 to ResNet50. We trained with ResNet50 for 30 epochs. Since it was not able to fit on our GPU, we decrease the batch size from 128 to 48. We also changed the learning rate from 0.01 initially, 0.001 partway, 0.0001 finally.
-
-Since increasing the size of the test image inputs could improve the accuracy, we changed the transforms to use Resize(256) and RandomCrop(256, padding=8, padding_mode='edge') instead of Resize(128) and RandomCrop(128, padding=8, padding_mode='edge'). We also changed the test transforms to use Resize(256) instead of Resize(128).
+Our third model is ResNet50. We trained for 30 epochs. Since increasing the size of the image inputs could improve the accuracy, we changed the transforms to use `Resize(256)` and `RandomCrop(256, padding=8, padding_mode='edge')` instead of `Resize(128)` and `RandomCrop(128, padding=8, padding_mode='edge')`. We also changed the test transforms to use `Resize(256)` instead of `Resize(128)`. However, it was not able to fit on our GPU memory, so we needed to decrease the batch size from 128 to 48. We also changed the learning rate from 0.01 initially, 0.001 after epoch 5, and 0.0001 after epoch 10.
 ```
 resnet = torch.hub.load('pytorch/vision:v0.6.0', 'resnet50', pretrained=True)
 resnet.fc = nn.Linear(2048, 555)
@@ -68,7 +66,7 @@ Our result after checkpoint 30 is:
 
 
 ## ResNet50 (Resolution=512)
-Our fourth model is to still use ResNet50, but we change the resolution from 256 to 512. We trained with ResNet50 for 13 epochs since our memory space is not big enough to run more epochs. However, we also decreased the batch size from 48 to 24.
+Our fourth model is still ResNet50, but we change the resolution from 256 to 512. We trained with ResNet50 for 13 epochs since our memory space is not big enough to run more epochs. We also decreased the batch size from 48 to 24. The learning rate was from 0.01, to 0.001 after epoch 5, and finally 0.0001 after epoch 10.
 ```
 resnet = torch.hub.load('pytorch/vision:v0.6.0', 'resnet50', pretrained=True)
 resnet.fc = nn.Linear(2048, 555)
@@ -83,7 +81,7 @@ Our result after checkpoint 13 is:
 ## Discussion
 Problem:
 
-Initially, we did not use GPU to run our model, so it took us a few days to finish running ResNet18 and ResNet34. When we changed to use GPU, the project went faster, but the memory space was too small to train with ResNet50. There are lots of warnings about full memory when we load the birds data and train with the ResNet. It might be better to run locally.
+Initially, we used cpu to run our model, so it took us a few days to finish running ResNet18 and ResNet34. When we changed to use GPU, the project went much faster, but the memory space was too small to train with ResNet50. There are lots of warnings about full memory when we load the birds data and training. We had to decrease the batch size to run in colab. It might be better to run locally.
 
 Improvements: 
 
